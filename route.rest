@@ -1,0 +1,29 @@
+GET http://localhost:3000/services
+
+###
+
+POST http://localhost:3000/services
+Content-Type: application/json
+
+{
+    "title": "Elliot",
+    "cost": "90",
+    "description": "very nice",
+    "bpId": "123678268647863"
+}
+
+###
+PATCH http://localhost:3000/cProfile/65772e42aae70f4832d46058
+Content-Type: application/json
+
+{
+    "title": "Full roof replacement",
+    "cost": "90",
+    "description": "very nice",
+    "bpId": "123678268647863"
+}
+###
+
+DELETE http://localhost:3000/bProfile/65772568c72e6b0b375572ab
+
+
