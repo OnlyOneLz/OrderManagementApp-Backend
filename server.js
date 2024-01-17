@@ -1,7 +1,10 @@
 require('dotenv').config()
 const express = require('express')
 const app = express()
+const cors = require('cors')
 const mongoose = require('mongoose')
+
+app.use(cors())
 
 console.log(process.env.DATABASE_URL);
 mongoose.connect(process.env.DATABASE_URL)
@@ -11,8 +14,8 @@ db.once('open', () => console.log('Connected to database'))
 
 app.use(express.json())
 
-const orderRouter = require('./routes/orders.js')
-app.use('/orders', orderRouter)
+const enquiriesRouter = require('./routes/enquiries.js')
+app.use('/enquiries', enquiriesRouter)
 
 const bRouter = require('./routes/businessProfile.js')
 app.use('/bProfile', bRouter)
@@ -23,5 +26,8 @@ app.use('/cProfile', cRouter)
 const servicesRouter = require('./routes/services.js')
 app.use('/services', servicesRouter)
 
-app.listen(3000, () => console.log('server has started'))
+const messagesRouter = require('./routes/messages.js')
+app.use('/messages', messagesRouter)
+
+app.listen(4000, () => console.log('server has started'))
 

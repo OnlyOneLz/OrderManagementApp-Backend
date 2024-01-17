@@ -19,11 +19,13 @@ router.get('/:id', getBusinessProfile, async (req, res) => {
 router.post('/', (req, res) => {
     try {
         const businessProfile = new BusinessProfile({
-            businessPic: req.body.businessPic,
+            // businessPic: req.body.businessPic,
             businessName: req.body.businessName,
             owner: req.body.owner,
             address: req.body.address,
-            email: req.body.email
+            email: req.body.email,
+            userId: req.body.userId,
+            description: req.body.description
         })
         businessProfile.save()
         res.status(200).json('businessProfile Saved!')
@@ -34,9 +36,9 @@ router.post('/', (req, res) => {
 })
 
 router.patch('/:id', getBusinessProfile, async(req, res) => {
-    if (req.body.businessPic != null){
-        res.businessProfile.businessPic = req.body.businessPic
-    }
+    // if (req.body.businessPic != null){
+    //     res.businessProfile.businessPic = req.body.businessPic
+    // }
     if (req.body.businessName != null){
         res.businessProfile.businessName = req.body.businessName
     }
@@ -48,6 +50,12 @@ router.patch('/:id', getBusinessProfile, async(req, res) => {
     }
     if (req.body.email != null){
         res.businessProfile.email = req.body.email
+    }
+    if (req.body.rating != null){
+        res.businessProfile.rating = req.body.rating
+    }
+    if (req.body.description != null){
+        res.businessProfile.description = req.body.description
     }
     try {
         const updatedbusinessProfile = await res.businessProfile.save()
@@ -70,9 +78,9 @@ router.delete('/:id', getBusinessProfile, async (req, res) => {
 async function getBusinessProfile(req, res, next) {
     let businessProfile
     try {
-        businessProfile = await BusinessProfile.findById(req.params.id)
+        businessProfile = await BusinessProfile.findOne({userId: req.params.id})
         if (businessProfile == null) {
-            return res.status(404).json({ message: 'Cannot find businessProfile' })
+            return res.status(404).json('Cannot find businessProfile')
         }
     } catch (error) {
         return res.status(500).json({ message: error.message })

@@ -1,11 +1,11 @@
 const mongoose = require('mongoose')
 
 const businessProfileSchema = new mongoose.Schema({
-    businessPic: {
-        type: String,
-        required: true,
-        default: ''
-    },
+    // businessPic: {
+    //     type: String,
+    //     required: true,
+    //     default: ''
+    // },
     businessName: {
         type: String,
         required: true
@@ -24,6 +24,19 @@ const businessProfileSchema = new mongoose.Schema({
         requried: true,
     },
     email: {
+        type: String,
+        required: true
+    },
+    userId: {
+        type: String,
+        required: true
+    },
+    rating: {
+        type: String,
+        required: true,
+        default: '0'
+    },
+    description: {
         type: String,
         required: true
     }

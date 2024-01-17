@@ -1,14 +1,19 @@
 const mongoose = require('mongoose')
 
 const customerProfileSchema = new mongoose.Schema({
-    profilePic: {
+    // profilePic: {
+    //     type: File,
+    //     required: true,
+    // },
+    firstName: {
         type: String,
-        required: true,
-        default: 'url'
+        required: false,
+        default: ''
     },
-    name: {
+    lastName:{
         type: String,
-        required: true
+        requried: false,
+        default: ''
     },
     date: {
         type: Date,
@@ -18,15 +23,24 @@ const customerProfileSchema = new mongoose.Schema({
     address: {
         type: String, 
         requried: true,
+        default: ''
     },
     phoneNum: {
         type: Number,
-        required: true
+        required: true,
+        default: 0
+
     },
     email: {
         type: String,
-        required: true
-    }
+        required: false,
+        default: ''
+    },
+    userId: {
+        type: String,
+        required: true,
+        default: ''
+    },
 })
 
 module.exports = mongoose.model('CustomerProfile', customerProfileSchema)

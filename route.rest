@@ -1,29 +1,29 @@
-GET http://localhost:3000/services
+GET http://localhost:4000/bProfile
 
 ###
 
-POST http://localhost:3000/services
+POST http://localhost:4000/services
 Content-Type: application/json
 
 {
-    "title": "Elliot",
-    "cost": "90",
-    "description": "very nice",
-    "bpId": "123678268647863"
+    "title": "Full-House Clean ",
+    "description": "3 Hour Full-House clean",
+    "cost": 200,
+    "userId": "user_2ZUrvm1avtPdeFY2EqiGUy0BG6b"
 }
 
 ###
-PATCH http://localhost:3000/cProfile/65772e42aae70f4832d46058
+PATCH http://localhost:3000/cProfile/665772a51f33c8405604a1efd
 Content-Type: application/json
 
 {
-    "title": "Full roof replacement",
-    "cost": "90",
-    "description": "very nice",
-    "bpId": "123678268647863"
+    "name": "els",
+    "address": "Flat 10 Brentcross Gardens",
+    "phoneNum": "07961838148",
+    "email": "elliotrnlewis@gmail.com"
 }
 ###
 
-DELETE http://localhost:3000/bProfile/65772568c72e6b0b375572ab
+DELETE http://localhost:3000/services/65772568c72e6b0b375572ab
 
 

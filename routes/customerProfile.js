@@ -19,11 +19,14 @@ router.get('/:id', getCustomerProfile, async (req, res) => {
 router.post('/', (req, res) => {
     try {
         const customerProfile = new CustomerProfile({
-            profilePic: req.body.profilePic,
-            name: req.body.name,
+            // profilePic: req.body.profilePic,
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
             phoneNum: req.body.phoneNum,
             address: req.body.address,
-            email: req.body.email
+            email: req.body.email,
+            userId: req.body.userId,
+            business: req.body.business
         })
         customerProfile.save()
         res.status(200).json('CustomerProfile Saved!')
@@ -34,11 +37,14 @@ router.post('/', (req, res) => {
 })
 
 router.patch('/:id', getCustomerProfile, async(req, res) => {
-    if (req.body.profilePic != null){
-        res.customerProfile.profilePic = req.body.profilePic
+    // if (req.body.profilePic != null){
+    //     res.customerProfile.profilePic = req.body.profilePic
+    // }
+    if (req.body.firstName != null){
+        res.customerProfile.firstName = req.body.firstName
     }
-    if (req.body.name != null){
-        res.customerProfile.businessName = req.body.name
+    if (req.body.lastName != null){
+        res.customerProfile.lastName = req.body.lastName
     }
     if (req.body.address != null){
         res.customerProfile.address = req.body.address
@@ -48,6 +54,9 @@ router.patch('/:id', getCustomerProfile, async(req, res) => {
     }
     if (req.body.email != null){
         res.customerProfile.email = req.body.email
+    }
+    if (req.body.userId != null){
+        res.customerProfile.userId = req.body.userId
     }
     try {
         const updatedCustomerProfile = await res.customerProfile.save()
@@ -70,9 +79,9 @@ router.delete('/:id', getCustomerProfile, async (req, res) => {
 async function getCustomerProfile(req, res, next) {
     let customerProfile
     try {
-        customerProfile = await CustomerProfile.findById(req.params.id)
+        customerProfile = await CustomerProfile.findOne({userId: req.params.id})
         if (customerProfile == null) {
-            return res.status(404).json({ message: 'Cannot find customerProfile' })
+            return res.status(404).json('Cannot find customerProfile')
         }
     } catch (error) {
         return res.status(500).json({ message: error.message })

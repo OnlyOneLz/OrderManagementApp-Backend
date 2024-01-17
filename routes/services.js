@@ -22,7 +22,9 @@ router.post('/', (req, res) => {
             title: req.body.title,
             cost: req.body.cost,
             description: req.body.description,
-            bpId: req.body.bpId
+            userId: req.body.userId,
+            category: req.body.category,
+            included: req.body.included
         })
         services.save()
         res.status(200).json('services Saved!')
@@ -32,21 +34,26 @@ router.post('/', (req, res) => {
     }
 })
 
-router.patch('/:id', getServices, async(req, res) => {
+router.patch('/:id', async(req, res) => {
+    const services = await Services.findById(req.params.id)
     if (req.body.title != null){
-        res.services.title = req.body.title
+        services.title = req.body.title
     }
     if (req.body.cost != null){
-        res.services.cost = req.body.cost
+        services.cost = req.body.cost
     }
     if (req.body.description != null){
-        res.services.description = req.body.description
+        services.description = req.body.description
     }
-    if (req.body.bpId != null){
-        res.services.bpId = req.body.bpId
+    if (req.body.category != null){
+        services.category = req.body.category
+    }
+    if (req.body.included != null){
+        services.included = req.body.included
     }
     try {
-        const updatedServices = await res.services.save()
+        services.save()
+        const updatedServices = await services.save()
         res.json(updatedServices)
     } catch (error) {
         res.status(400).json({ message: error.message })
@@ -54,10 +61,15 @@ router.patch('/:id', getServices, async(req, res) => {
     
 })
 
-router.delete('/:id', getServices, async (req, res) => {
+router.delete('/:id', async (req, res) => {
     try {
-        await res.services.deleteOne()
+        const services = await Services.findById(req.params.id)
+        if (services == null) {
+            return res.status(404).json('Cannot find Services')
+        }else{
+        await services.deleteOne()
         res.json({ message: 'Deleted services!'})
+        }
     } catch (error) {
         res.status(500).json({ message: error.message })
     }
@@ -66,9 +78,9 @@ router.delete('/:id', getServices, async (req, res) => {
 async function getServices(req, res, next) {
     let services
     try {
-        services = await Services.findById(req.params.id)
+        services = await Services.find({userId: req.params.id})
         if (services == null) {
-            return res.status(404).json({ message: 'Cannot find Order' })
+            return res.status(404).json('Cannot find Services')
         }
     } catch (error) {
         return res.status(500).json({ message: error.message })
